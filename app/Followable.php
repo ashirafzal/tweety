@@ -15,14 +15,17 @@ trait Followable
         return $this->follows()->detach($user);
     }
 
+    // $user->toggleFollow($otherUser);
     public function toggleFollow(User $user)
     {
-        if($this->following($user))
-        {
-            return $this->unfollow($user);
-        }
+        $this->follows()->toggle($user);
 
-            return $this->follow($user);
+        // Before explore page method 
+        // if($this->following($user))
+        // {
+        //     return $this->unfollow($user);
+        // }
+        // return $this->follow($user);
     }
 
     public function following(User $user)

@@ -13,9 +13,16 @@ class TweetsController extends Controller
     {
         //$tweets = Tweet::latest()->get();
 
+        // return auth()->user()->timeline();
+
         return view('tweets.index',[
-            'tweets' => auth()->user()->timeline()
-        ]);
+            'tweets' => 
+                auth()
+                ->user()
+                ->timeline()
+            ]
+        );
+        
     }
 
     public function store()

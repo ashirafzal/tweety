@@ -2,7 +2,7 @@
     <li>
         <a 
             class="font-bold text-lg mb-4 block" 
-                href="{{ route('home') }}">
+                href="/tweets">
                 Home
         </a>
     </li>
@@ -16,47 +16,21 @@
     <li>
         <a 
             class="font-bold text-lg mb-4 block" 
-                href="#">
-                Notifications
-        </a>
-    </li>
-    <li>
-        <a 
-            class="font-bold text-lg mb-4 block" 
-                href="#">
-                Messages
-        </a>
-    </li>
-    <li>
-        <a 
-            class="font-bold text-lg mb-4 block" 
-                href="#">
-                Bookmarks
-        </a>
-    </li>
-    <li>
-        <a 
-            class="font-bold text-lg mb-4 block" 
-                href="#">
-                Lists
-        </a>
-    </li>
-    <li>
-        <a 
-            class="font-bold text-lg mb-4 block" 
                 href="{{ route('profile', auth()->user() ) }}">
                 Profile
         </a>
     </li>
     <li>
-        <a 
-            class="font-bold text-lg mb-4 block" 
-                href="#">
-                More
-        </a>
+        <form method="POST" action="/logout">
+            @csrf
+
+            <button class="font-bold text-lg">Logout</button>
+        </form>
     </li>
 </ul>
-
-<button type="submit" 
-    class="bg-blue-500 rounded-full shadow py-3 px-3 text-white text-sm">Tweet-a-roo!
-</button>
+<br/>
+<a href="/tweets">
+    <button type="submit" 
+        class="bg-blue-500 rounded-full shadow py-3 px-3 text-white text-sm">Tweet-a-roo!
+    </button>
+</a>

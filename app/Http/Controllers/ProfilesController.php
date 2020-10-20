@@ -10,11 +10,17 @@ class ProfilesController extends Controller
 {
     public function show(User $user)
     {
-        return view('profiles.show', compact('user') );
+        return view('profiles.show',[
+            'user' => $user,
+            'tweets' => $user
+                ->tweets()
+                ->withLikes()
+                ->paginate(50),
+        ] );
     }   
 
     public function edit(User $user)
-    {
+    {       
         //Another way to authorize the user edit. Only user can authorize its own profile 
         //$this->authorize('edit', $user);
         return view('profiles.edit', compact('user'));
@@ -38,6 +44,10 @@ class ProfilesController extends Controller
                 'max:255',
             ],
 
+            'avatar' => [
+                'file'
+            ],
+
             'email' => [
                 'email',
                 'required',
@@ -54,11 +64,16 @@ class ProfilesController extends Controller
                 'confirmed',
             ]
         ]);
+        
+        if(request('avatar'))
+        {
+            $attributes['avatar'] = request('avatar')->store('avatars');
+        }
 
         $user->update($attributes);
         
         return redirect($user->path());
-
+        
     }
 
 }

@@ -5,7 +5,7 @@
         <a href="{{ $tweet->user->path() }}">
             <img 
                 src="{{ $tweet->user->avatar }}" 
-                alt="random user image"
+                alt=""
                 class="rounded-full mr-2"
                 width="50"
                 height="50"
@@ -21,8 +21,13 @@
             </a>
         </h5>
 
-        <p class="text-sm">
+        <p class="text-sm mb-3">
             {{ $tweet->body }}
         </p>
+        
+        @component('components.like-buttons', ['tweet' => $tweet])
+                
+        @endcomponent
+
     </div>
 </div>

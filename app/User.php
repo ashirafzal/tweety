@@ -15,9 +15,9 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'username', 'name', 'email', 'password',
-    ];
+    
+     protected $guarded = [];
+     //protected $fillable = ['username', 'avatar', 'name', 'email', 'password',];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -37,9 +37,26 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function getAvatarAttribute()
+    public function getAvatarAttribute($value)
     {
-        return "https://picsum.photos/200?u=* .$this->email";
+        //return "https://picsum.photos/200?u=* .$this->email";
+
+        if($value == ''){
+            return asset('images/logo.png');
+        }else{
+            return asset('storage/'.$value);
+        }
+
+        // The below method is the series official way the jeffrey has done but it was not showing the image from public folder
+        // if the avatar is null that is why i used the above method for it.
+        // return asset('storage/'.$value ?: 'images/logo.png');
+        
+    }
+
+    // $user->password = 'foobar';
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
     }
 
     public function timeline()
@@ -54,8 +71,10 @@ class User extends Authenticatable
         //$ids->push($this->id);
 
         return Tweet::whereIn('user_id', $friends)
-        ->orWhere('user_id', $this->id)
-            ->latest()->get();
+            ->orWhere('user_id', $this->id)
+            ->withLikes()
+            ->latest()
+            ->paginate(50);
     }
 
     public function tweets()

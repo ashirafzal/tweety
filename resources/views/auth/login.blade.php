@@ -1,6 +1,6 @@
 @component('components.master')
-<div class="mx-auto px-6 py-4 bg-gray-400">
-    <div class="row justify-content-center">
+<div class="mx-auto">
+    <div class="px-6 py-4 bg-gray-400">
         <div class="col-md-8">
             <div class="card">
                 <div class="font-bold text-lg mb-4">{{ __('Login') }}</div>
@@ -54,12 +54,21 @@
                                 <button type="submit" class="px-6 py-3 my-3 rounded text-sm uppercase bg-blue-600 text-white">
                                     {{ __('Login') }}
                                 </button>
+                                
                                 <br/>
+
+                                <a class="btn btn-link" href="{{ route('register') }}">
+                                    {{ __('Register Yourself') }}
+                                </a>
+
+                                <br/>
+
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+
                             </div>
                         </div>
                     </form>

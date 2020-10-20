@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\user;
 
 class Tweet extends Model
 {
+    use Likable;
 
     protected $guarded = [];
 
@@ -13,4 +15,5 @@ class Tweet extends Model
     {
         return $this->belongsTo(User::class);
     }
+
 }
