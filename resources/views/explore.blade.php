@@ -15,6 +15,6 @@
             </a>   
         @endforeach
 
-        {{ $users->links() }}
+        {{-- {{ $users->links() }} --}}
     </div>
 @endcomponent('components.app') 

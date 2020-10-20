@@ -14,6 +14,8 @@
                 >
                 
                 {{ $user->name}}
+                <br/>
+                {{ '@'.$user->username}}
             </a>
         </div>
     </li>
