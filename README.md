@@ -1,3 +1,15 @@
+# Some changes in project to get avatar from storage 
+
+First open the .env file and add this line at the end
+
+FILESYSTEM_DRIVER=public
+
+After this run this command in the terminal
+
+php artisan link:storage
+
+after this avatar functionality will work fine.
+
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
 <p align="center">
