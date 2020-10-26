@@ -59,7 +59,7 @@
 
                     <img 
                     src="{{ $user->avatar }}" 
-                    alt="your avatar"
+                    alt=""
                     width="40">
 
                 </div>
