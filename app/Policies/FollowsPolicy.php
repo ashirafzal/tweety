@@ -3,9 +3,10 @@
 namespace App\Policies;
 
 use App\User;
+use App\Follows;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy
+class FollowsPolicy
 {
     use HandlesAuthorization;
 
@@ -31,22 +32,22 @@ class UserPolicy
 
     public function create(User $user)
     {
-        return true;
+        return false;
     }
 
-    public function update(User $currentUser,User $user)
+    public function update(User $user,Follows $follows)
     {
-        // return true;
-        return $currentUser->is($user);
+        return false;
     }
 
-    public function delete(User $user)
+    public function delete(User $user,Follows $follows)
     {
-        return $user->email === 'ashirafzal96@gmail.com';
+        return false;
     }
 
-    public function edit(User $currentUser, User $user)
+    public function edit(User $user,Follows $follows)
     {
-        return $currentUser->is($user);
+        return false;
     }
+
 }

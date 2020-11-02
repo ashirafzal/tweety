@@ -3,30 +3,30 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\HasMany;
-use App\Nova\Metrics\UserCount;
+use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Metrics\TweetCount;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use Maatwebsite\LaravelNovaExcel\Actions\ExportToExcel;
 
-class User extends Resource
+class Tweet extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\\User';
+    public static $model = 'App\Tweet';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -34,7 +34,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id', 'body',
     ];
 
     /**
@@ -43,33 +43,22 @@ class User extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
+
+    public function tweets()
+    {
+        return $this->hasMany(Tweet::class);
+    }
+
     public function fields(Request $request)
     {
         return [
             ID::make()->sortable(),
 
-            Gravatar::make()->maxWidth(50),
+            Text::make('Body','body')->hideWhenCreating()->hideWhenUpdating(),
 
-            Text::make('Username')
-                ->sortable()
-                ->rules('required', 'max:255'),
+            BelongsTo::make('Username','user',User::class)->hideWhenCreating()->hideWhenUpdating(),
 
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
-
-            HasMany::make('Tweets'),
+            Trix::make('Tweet','body')->rules('required'),
         ];
     }
 
@@ -82,7 +71,7 @@ class User extends Resource
     public function cards(Request $request)
     {
         return [
-            (new Usercount)->width('full'),
+            (new TweetCount)->width('full'),
         ];
     }
 

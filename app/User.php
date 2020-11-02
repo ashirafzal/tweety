@@ -6,6 +6,9 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use App\Tweet;
+use App\Follows;
+
 class User extends Authenticatable
 {
     use Notifiable ,Followable;
@@ -77,18 +80,27 @@ class User extends Authenticatable
             ->paginate(50);
     }
 
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function like()
+    {
+        return $this->hasMany(Likes::class);
+    }
+
     public function tweets()
     {
         return $this->hasMany(Tweet::class)->latest();
     }
-    
+
 
     public function path($append = '')
     {
         $path = route('profile', $this->name);
         return $append ? "{$path}/{$append}" : $path;
     }
-
 
     /* This method returns the value=>name of the auth()::user | Column name in the users table is also name 
     (User table which is build by laravel auth) */

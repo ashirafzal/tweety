@@ -41,7 +41,7 @@ trait Followable
             User::class, 
             'follows' , 
             'user_id' , 
-            'following_user_id'
+            'following_user_id',
         );
     }
 

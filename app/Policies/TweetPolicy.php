@@ -3,9 +3,10 @@
 namespace App\Policies;
 
 use App\User;
+use App\Tweet;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy
+class TweetPolicy
 {
     use HandlesAuthorization;
 
@@ -34,19 +35,18 @@ class UserPolicy
         return true;
     }
 
-    public function update(User $currentUser,User $user)
+    public function update(User $user,Tweet $tweet)
     {
-        // return true;
-        return $currentUser->is($user);
+        return $tweet->user_id === $user->id;
     }
 
-    public function delete(User $user)
+    public function delete(User $user,Tweet $tweet)
     {
-        return $user->email === 'ashirafzal96@gmail.com';
+        return $tweet->user_id === $user->id;
     }
 
-    public function edit(User $currentUser, User $user)
+    public function edit(User $user,Tweet $tweet)
     {
-        return $currentUser->is($user);
+        return $tweet->user_id === $user->id;
     }
 }

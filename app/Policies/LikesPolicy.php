@@ -3,9 +3,10 @@
 namespace App\Policies;
 
 use App\User;
+use App\Likes;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy
+class LikesPolicy
 {
     use HandlesAuthorization;
 
@@ -24,29 +25,29 @@ class UserPolicy
         return true;
     }
 
-    public function view(User $user)
+    public function view(User $user,Likes $likes)
     {
-        return true;
+        return $likes->user_id === $user->id;;
     }
 
     public function create(User $user)
     {
-        return true;
+        return false;
     }
 
-    public function update(User $currentUser,User $user)
+    public function update(User $user)
     {
-        // return true;
-        return $currentUser->is($user);
+        return false;
     }
 
     public function delete(User $user)
     {
-        return $user->email === 'ashirafzal96@gmail.com';
+        return false;
     }
 
-    public function edit(User $currentUser, User $user)
+    public function edit(User $user,Likes $tweet)
     {
-        return $currentUser->is($user);
+        return false;
     }
+
 }

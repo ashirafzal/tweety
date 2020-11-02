@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Follows;
 use Illuminate\Http\Request;
 
 use App\User;
 
 class FollowsController extends Controller
 {
-
+    
     public function store(User $user)
     {
         auth()
