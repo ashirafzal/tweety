@@ -5,6 +5,8 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
+use Maatwebsite\LaravelNovaExcel\Actions\ExportToExcel;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Likes extends Resource
@@ -68,6 +70,7 @@ class Likes extends Resource
     public function filters(Request $request)
     {
         return [];
+        
     }
 
     /**
@@ -89,6 +92,9 @@ class Likes extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new DownloadExcel,
+            new ExportToExcel,
+        ];
     }
 }
